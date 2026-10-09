@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Placar da Live — Lula x Flávio Bolsonaro</title>
+<style>
+:root{--bg:#0b1020;--panel:#151d32;--text:#fff;--muted:#c5ccda;--blue:#1c4f91;--red:#7c252d;--green:#2fd08b}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:transparent;font-family:Arial,Helvetica,sans-serif;color:var(--text)}
+body{display:flex;align-items:center;justify-content:center;padding:18px}
+.wrap{width:100%;max-width:1200px;background:linear-gradient(135deg,rgba(7,13,27,.97),rgba(24,31,51,.97));border:2px solid #ffffff25;border-radius:24px;padding:22px;box-shadow:0 12px 36px #0008}
+header{text-align:center;margin-bottom:18px}
+h1{margin:0;font-size:clamp(24px,3.2vw,42px);letter-spacing:1px}
+.sub{margin-top:7px;color:var(--muted);font-size:clamp(11px,1.2vw,15px);letter-spacing:1.5px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{border-radius:18px;padding:16px;min-width:0;text-align:center;border:1px solid #ffffff30}
+.lula{background:linear-gradient(150deg,var(--blue),#102644)}
+.flavio{background:linear-gradient(150deg,var(--red),#35151b)}
+.photo{height:clamp(130px,22vw,290px);max-height:300px;border-radius:12px;background:#ffffff18;border:2px solid #ffffff40;overflow:hidden;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.placeholder{font-size:clamp(17px,2vw,26px);font-weight:800;color:#fff9}
+.name{font-size:clamp(17px,2.1vw,27px);font-weight:900;line-height:1.1;min-height:2.2em;display:flex;align-items:center;justify-content:center}
+.count{font-size:clamp(46px,7vw,88px);font-weight:900;line-height:1.05;margin:7px 0 3px;font-variant-numeric:tabular-nums;text-shadow:0 3px 12px #0005}
+.label{font-size:clamp(12px,1.4vw,17px);color:#fffde8}
+.status{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--muted);font-size:12px;margin-top:16px}
+.dot{width:9px;height:9px;border-radius:50%;background:#f0b429;display:inline-block}
+.small{font-size:11px;color:#aab4c7;text-align:center;margin-top:8px}
+@media(max-width:650px){.wrap{padding:12px}.cards{gap:8px}.card{padding:9px}.photo{height:150px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>DISPUTA AO VIVO</h1><div class="sub">PLACAR DE PRESENTES DA LIVE • 1 PRESENTE = 1 PONTO</div></header>
+  <main class="cards">
+    <section class="card lula">
+      <div class="photo"><img id="lulaPhoto" src="lula.jpg" alt="Foto de Lula" onerror="this.style.display='none';document.getElementById('lulaPlaceholder').style.display='block'"><div id="lulaPlaceholder" class="placeholder" style="display:none">ADICIONE<br>lula.jpg</div></div>
+      <div class="name">LULA</div><div id="lulaCount" class="count">0</div><div class="label">🌹 Rosas recebidas</div>
+    </section>
+    <section class="card flavio">
+      <div class="photo"><img id="flavioPhoto" src="flavio.jpg" alt="Foto de Flávio Bolsonaro" onerror="this.style.display='none';document.getElementById('flavioPlaceholder').style.display='block'"><div id="flavioPlaceholder" class="placeholder" style="display:none">ADICIONE<br>flavio.jpg</div></div>
+      <div class="name">FLÁVIO BOLSONARO</div><div id="flavioCount" class="count">0</div><div class="label">🐼 Pandas recebidos</div>
+    </section>
+  </main>
+  <div class="status"><span id="dot" class="dot"></span><span id="statusText">Aguardando conexão com TikFinity</span></div>
+  <div class="small">Contagem de interação desta live; não representa pesquisa eleitoral.</div>
+</div>
+<script>
+(() => {
+  const params = new URLSearchParams(location.search);
+  let lula = 0, flavio = 0;
+  const update = () => {
+    document.getElementById('lulaCount').textContent = lula.toLocaleString('pt-BR');
+    document.getElementById('flavioCount').textContent = flavio.toLocaleString('pt-BR');
+  };
+  const status = (text, connected=false) => {
+    document.getElementById('statusText').textContent = text;
+    document.getElementById('dot').style.background = connected ? '#2fd08b' : '#f0b429';
+  };
+  const giftNameFrom = d => {
+    const keys = ['giftName','gift_name','name','gift','giftTitle','gift_title','gift_name_en'];
+    for (const k of keys) if (d && typeof d[k] === 'string') return d[k].toLowerCase();
+    return '';
+  };
+  const giftCountFrom = d => {
+    const keys = ['repeatCount','repeat_count','giftCount','gift_count','count','comboCount','combo_count'];
+    for (const k of keys) if (d && Number.isFinite(Number(d[k])) && Number(d[k]) > 0) return Math.floor(Number(d[k]));
+    return 1;
+  };
+  const handle = raw => {
+    let msg;
+    try { msg = typeof raw === 'string' ? JSON.parse(raw) : raw; } catch(e) { return; }
+    if (!msg || String(msg.event || msg.type || '').toLowerCase() !== 'gift') return;
+    const d = msg.data || msg;
+    const name = giftNameFrom(d);
+    const qty = giftCountFrom(d);
+    // Recognize English and Portuguese labels; other gifts are ignored.
+    if (name === 'rose' || name === 'roses' || name === 'rosa' || name === 'rosas' || name.includes('rose') || name.includes('rosa')) {
+      lula += qty; update();
+    } else if (name === 'panda' || name.includes('panda')) {
+      flavio += qty; update();
+    }
+  };
+  if (params.get('demo') === '1') {
+    status('MODO DE TESTE — placar demonstrativo', true);
+    setTimeout(()=>{lula += 1; update();},700);
+    setTimeout(()=>{flavio += 1; update();},1400);
+  } else {
+    try {
+      const ws = new WebSocket('ws://127.0.0.1:21213/');
+      ws.onopen = () => status('Conectado ao TikFinity Desktop', true);
+      ws.onmessage = ev => handle(ev.data);
+      ws.onerror = () => status('Não conectou — confira TikFinity Desktop');
+      ws.onclose = () => status('Conexão encerrada — abra TikFinity Desktop');
+    } catch(e) { status('Falha ao iniciar conexão'); }
+  }
+})();
+</script>
+</body>
+</html>
