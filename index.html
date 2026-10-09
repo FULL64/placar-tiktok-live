@@ -1,57 +1,143 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Placar Rosa x Panda</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Placar da Live — Rosa x TikTok</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#101019;color:white;font-family:Arial,sans-serif}
-header{text-align:center;padding:12px;font-size:24px;font-weight:bold}
-main{display:flex;gap:12px;padding:12px;max-width:1200px;margin:auto}
-.time{width:50%;min-height:360px;border-radius:20px;padding:20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.rosa{background:linear-gradient(145deg,#ff3b9d,#a90054)}
-.panda{background:linear-gradient(145deg,#30303b,#08080c);border:2px solid #777}
-.emoji{font-size:65px}
-h2{font-size:30px;margin:10px 0}
-.nome{font-size:20px}
-.pontos{font-size:76px;font-weight:bold;margin:18px 0}
-button{border:0;border-radius:8px;padding:10px 15px;margin:4px;cursor:pointer;font-size:15px}
-.controles{text-align:center;padding:8px}
-.status{color:#ccc;font-size:13px;text-align:center;padding:8px}
-@media(max-width:600px){main{gap:6px;padding:6px}.time{padding:10px;min-height:280px}h2{font-size:22px}.pontos{font-size:55px}.emoji{font-size:45px}}
+:root{color-scheme:dark}*{box-sizing:border-box}html,body{margin:0;min-height:100%;width:100%;background:transparent;font-family:Arial,Helvetica,sans-serif;color:#fff}body{display:flex;justify-content:center;align-items:center;padding:12px}.wrap{width:min(100%,1100px);padding:12px;background:linear-gradient(135deg,rgba(16,24,39,.96),rgba(25,27,45,.94));border:1px solid #ffffff30;border-radius:20px;box-shadow:0 8px 28px #0006}.title{text-align:center;font-size:clamp(20px,2.5vw,32px);font-weight:900;margin:0 0 8px}.subtitle{text-align:center;font-size:clamp(10px,1.2vw,14px);letter-spacing:1px;margin:0 0 16px;color:#dbeafe}.cards{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:stretch}.card{min-width:0;min-height:365px;border-radius:18px;padding:16px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;border:2px solid #ffffff38;box-shadow:0 5px 18px #0004}.rosa{background:linear-gradient(145deg,#ff2b9a,#ad005f);border-color:#ff70bd70}.tiktok{background:linear-gradient(145deg,#25242e,#08080d);border-color:#ffffff60}.portrait{display:block;width:clamp(100px,15vw,170px);height:clamp(100px,15vw,170px);object-fit:cover;object-position:center 25%;border:2px solid #ffffff80;border-radius:12px;margin:0 auto 10px;background:#222;box-shadow:0 3px 10px #0005}.emoji{font-size:clamp(38px,4vw,54px);line-height:1;margin:0 0 10px}.team{font-size:clamp(18px,2.2vw,28px);font-weight:900;margin:0 0 5px}.person{font-size:clamp(14px,1.5vw,19px);margin:0 0 4px}.score{font-size:clamp(48px,6vw,78px);font-weight:900;line-height:1.05;margin:12px 0;text-shadow:0 3px 7px #0005;font-variant-numeric:tabular-nums}.label{font-size:clamp(12px,1.3vw,15px);margin-top:auto;padding-top:4px}.status{text-align:center;font-size:12px;min-height:18px;margin:10px 0 6px;color:#e5e7eb}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#f59e0b;margin-right:5px}.status.connected .dot{background:#22c55e}.status.error .dot{background:#ef4444}.controls{display:flex;flex-direction:column;gap:8px;align-items:center;padding:8px 4px 2px}.tools,.points{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}button{border:0;border-radius:7px;padding:9px 12px;font-weight:bold;font-size:12px;cursor:pointer;transition:transform .08s ease,filter .08s ease}button:hover{filter:brightness(1.08)}button:active{transform:scale(.97)}button:focus-visible{outline:2px solid white;outline-offset:2px}.test{background:#fff;color:#111}.reset{background:#ef4444;color:#fff}.photo-btn{background:#e9d5ff;color:#25143b}.file-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.last{font-size:12px;color:#dbeafe;text-align:center;min-height:16px;margin-top:6px}
+@media(max-width:560px){body{padding:4px}.wrap{padding:7px;border-radius:13px}.cards{gap:6px}.card{min-height:280px;padding:10px 5px;border-radius:12px}.portrait{width:clamp(65px,18vw,100px);height:clamp(65px,18vw,100px)}.score{margin:8px 0}.tools,.points{gap:4px}button{padding:7px 8px;font-size:11px}}
 </style>
 </head>
 <body>
-<header>🏆 DISPUTA AO VIVO 🏆</header>
-<main>
-<section class="time rosa">
-<div class="emoji">🌹</div>
-<h2>TIME ROSA</h2>
-<div class="nome">Lula</div>
-<div class="pontos" id="rosa">0</div>
-<div>Presentes: Rosa</div>
+<main class="wrap">
+<h1 class="title">🏆 DISPUTA AO VIVO 🏆</h1>
+<p class="subtitle">PLACAR DE PRESENTES DA LIVE • 1 PRESENTE = 1 PONTO</p>
+<div class="cards">
+<section class="card rosa" aria-label="Time Rosa">
+<img class="portrait" id="photoRosa" src="https://commons.wikimedia.org/wiki/Special:FilePath/Foto_oficial_de_Luiz_In%C3%A1cio_Lula_da_Silva_%283x4_cropped%29.jpg" alt="Foto de Lula" onerror="this.hidden=true;document.getElementById('fallbackRosa').hidden=false">
+<div id="fallbackRosa" class="emoji" hidden>🌹</div>
+<div class="team">TIME ROSA</div><div class="person">Lula</div>
+<div class="score" id="scoreRosa" aria-live="polite">0</div><div class="label">🌹 Presentes: Rosa</div>
 </section>
-<section class="TIME TIKTOK">
-<div class="emoji">🎵</div>
-<h2>TIME TIKTOK</h2>
-<div class="nome">Flávio Bolsonaro</div>
-<div class="pontos" id="panda">0</div>
-<div>Presentes TikTok</div>
+<section class="card tiktok" aria-label="Time TikTok">
+<img class="portrait" id="photoTikTok" src="https://commons.wikimedia.org/wiki/Special:FilePath/Fl%C3%A1vio.Bolsonaro.2026.05.21.%28cropped%29.jpg" alt="Foto de Flávio Bolsonaro" onerror="this.hidden=true;document.getElementById('fallbackTikTok').hidden=false">
+<div id="fallbackTikTok" class="emoji" hidden>🎵</div>
+<div class="team">TIME TIKTOK</div><div class="person">Flávio Bolsonaro</div>
+<div class="score" id="scoreTikTok" aria-live="polite">0</div><div class="label">🎵 Presentes: TikTok</div>
 </section>
-</main>
-<div class="controles">
-<button onclick="alterar('rosa',1)">+ Rosa (teste)</button>
-<button onclick="alterar('panda',1)">+ TikTok (teste)</button>
-<button onclick="zerar()">Zerar placar</button>
 </div>
-<div class="status" id="status">Placar pronto para teste manual. Curtidas não são contabilizadas.</div>
+<div class="status" id="status"><span class="dot"></span><span id="statusText">Conectando ao TikFinity…</span></div>
+<div class="controls" aria-label="Controles do placar">
+<div class="tools">
+<button class="photo-btn" type="button" id="chooseRosa">Inserir foto do Lula</button><input class="file-input" id="fileRosa" type="file" accept="image/*">
+<button class="photo-btn" type="button" id="chooseTikTok">Inserir foto do Flávio</button><input class="file-input" id="fileTikTok" type="file" accept="image/*">
+<button class="photo-btn" type="button" id="restorePhotos">Fotos originais</button>
+</div>
+<div class="points">
+<button class="test" type="button" id="addRosa">+ Rosa</button>
+<button class="test" type="button" id="addTikTok">+ TikTok</button>
+<button class="reset" type="button" id="resetScores">Zerar placar</button>
+</div>
+</div>
+<div class="last" id="last" aria-live="polite">Curtidas não são contabilizadas.</div>
+</main>
 <script>
-let pontos={rosa:0,panda:0};
-function mostrar(){document.getElementById('rosa').textContent=pontos.rosa;document.getElementById('panda').textContent=pontos.panda}
-function alterar(time,n){pontos[time]=Math.max(0,pontos[time]+n);mostrar()}
-function zerar(){pontos={rosa:0,panda:0};mostrar()}
+(() => {
+  'use strict';
+  const WS_URL = 'ws://127.0.0.1:21213/';
+  let ws = null, reconnectTimer = null, scoreRosa = 0, scoreTikTok = 0;
+  const statusEl = document.getElementById('status');
+  const statusText = document.getElementById('statusText');
+  const lastEl = document.getElementById('last');
+  const photoRosa = document.getElementById('photoRosa');
+  const photoTikTok = document.getElementById('photoTikTok');
+  const defaultPhotos = { rosa: photoRosa.getAttribute('src'), tiktok: photoTikTok.getAttribute('src') };
+  const normalize = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+  function setStatus(message, kind = '') { statusText.textContent = message; statusEl.className = 'status ' + kind; }
+  function render() {
+    document.getElementById('scoreRosa').textContent = String(scoreRosa);
+    document.getElementById('scoreTikTok').textContent = String(scoreTikTok);
+  }
+  function addPoints(team, amount = 1, label = '') {
+    const points = Math.max(1, Math.min(1000, Number(amount) || 1));
+    if (team === 'rosa') { scoreRosa += points; lastEl.textContent = `🌹 ${label || 'Ponto manual'}: +${points} para Lula`; }
+    else { scoreTikTok += points; lastEl.textContent = `🎵 ${label || 'Ponto manual'}: +${points} para Flávio Bolsonaro`; }
+    render();
+  }
+  function giftName(data) {
+    const keys = ['giftName', 'gift_name', 'name', 'giftTitle', 'gift_title', 'displayName', 'title'];
+    for (const key of keys) {
+      const value = data && data[key];
+      if (typeof value === 'string' && value.trim()) return value.trim();
+      if (value && typeof value === 'object') {
+        for (const subkey of ['name', 'title', 'giftName']) if (typeof value[subkey] === 'string' && value[subkey].trim()) return value[subkey].trim();
+      }
+    }
+    return '';
+  }
+  function onMessage(raw) {
+    let event; try { event = JSON.parse(raw); } catch { return; }
+    const type = normalize(event.event || event.type || event.eventType || event.topic || '');
+    if (type && !type.includes('gift') && !type.includes('present')) return;
+    let data = event.data || event;
+    if (!data || typeof data !== 'object') return;
+    if (data.gift && typeof data.gift === 'object') data = { ...data, ...data.gift };
+    const name = giftName(data); if (!name) return;
+    const normalized = normalize(name);
+    const repeat = data.repeatCount || data.repeat_count || data.comboCount || data.combo_count || 1;
+    if (normalized === 'rose' || normalized === 'rosa' || normalized.includes('rose gift') || normalized.includes('rosa')) addPoints('rosa', repeat, name);
+    else if (normalized === 'tiktok' || normalized.includes('tik tok')) addPoints('tiktok', repeat, name);
+  }
+  function connect() {
+    clearTimeout(reconnectTimer);
+    try {
+      ws = new WebSocket(WS_URL);
+      ws.onopen = () => setStatus('Conectado ao serviço local do TikFinity', 'connected');
+      ws.onmessage = event => onMessage(event.data);
+      ws.onerror = () => setStatus('Falha na conexão local — confira o TikFinity', 'error');
+      ws.onclose = () => { setStatus('Sem conexão com TikFinity — reconectando…', 'error'); reconnectTimer = setTimeout(connect, 3000); };
+    } catch (error) { setStatus('Não foi possível abrir a conexão local', 'error'); reconnectTimer = setTimeout(connect, 3000); }
+  }
+  function changePhoto(which, input) {
+    const file = input.files && input.files[0]; if (!file) return;
+    if (!file.type.startsWith('image/')) { alert('Escolha um arquivo de imagem.'); input.value = ''; return; }
+    if (file.size > 5 * 1024 * 1024) { alert('Escolha uma imagem de até 5 MB.'); input.value = ''; return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const image = which === 'rosa' ? photoRosa : photoTikTok;
+      const fallback = document.getElementById(which === 'rosa' ? 'fallbackRosa' : 'fallbackTikTok');
+      image.src = reader.result; image.hidden = false; fallback.hidden = true;
+      try { localStorage.setItem(which === 'rosa' ? 'placarPhotoRosa' : 'placarPhotoTikTok', reader.result); }
+      catch { lastEl.textContent = 'Foto aplicada, mas não foi possível salvá-la neste navegador.'; }
+      if (!lastEl.textContent.startsWith('Foto aplicada')) lastEl.textContent = which === 'rosa' ? 'Foto do Lula atualizada.' : 'Foto do Flávio atualizada.';
+      input.value = '';
+    };
+    reader.readAsDataURL(file);
+  }
+  function loadSavedPhotos() {
+    try {
+      const rosa = localStorage.getItem('placarPhotoRosa');
+      const tiktok = localStorage.getItem('placarPhotoTikTok');
+      if (rosa) { photoRosa.src = rosa; photoRosa.hidden = false; document.getElementById('fallbackRosa').hidden = true; }
+      if (tiktok) { photoTikTok.src = tiktok; photoTikTok.hidden = false; document.getElementById('fallbackTikTok').hidden = true; }
+    } catch {}
+  }
+  document.getElementById('chooseRosa').addEventListener('click', () => document.getElementById('fileRosa').click());
+  document.getElementById('chooseTikTok').addEventListener('click', () => document.getElementById('fileTikTok').click());
+  document.getElementById('fileRosa').addEventListener('change', event => changePhoto('rosa', event.currentTarget));
+  document.getElementById('fileTikTok').addEventListener('change', event => changePhoto('tiktok', event.currentTarget));
+  document.getElementById('restorePhotos').addEventListener('click', () => {
+    photoRosa.src = defaultPhotos.rosa; photoRosa.hidden = false; document.getElementById('fallbackRosa').hidden = true;
+    photoTikTok.src = defaultPhotos.tiktok; photoTikTok.hidden = false; document.getElementById('fallbackTikTok').hidden = true;
+    try { localStorage.removeItem('placarPhotoRosa'); localStorage.removeItem('placarPhotoTikTok'); } catch {}
+    lastEl.textContent = 'Fotos originais restauradas.';
+  });
+  document.getElementById('addRosa').addEventListener('click', () => addPoints('rosa', 1, 'Teste manual'));
+  document.getElementById('addTikTok').addEventListener('click', () => addPoints('tiktok', 1, 'Teste manual'));
+  document.getElementById('resetScores').addEventListener('click', () => { scoreRosa = 0; scoreTikTok = 0; render(); lastEl.textContent = 'Placar zerado.'; });
+  loadSavedPhotos(); render(); connect();
+})();
 </script>
 </body>
 </html>
